@@ -1,5 +1,5 @@
 var expect = require('expect.js');
-var racer = require('racer');
+var racer = require('k-model');
 var plugin = require('../index');
 
 describe('bundle', function() {
