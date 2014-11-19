@@ -1,5 +1,5 @@
 {
-  "name": "racer-bundle",
+  "name": "k-bundle",
   "version": "0.1.1",
   "description": "Create Browserify package for a Racer or Derby app",
   "main": "index.js",
@@ -10,10 +10,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/codeparty/racer-bundle.git"
+    "url": "git://github.com/kantele/k-bundle.git"
   },
   "bugs": {
-    "url": "https://github.com/codeparty/racer-bundle/issues"
+    "url": "https://github.com/kantele/k-bundle/issues"
   },
   "dependencies": {
     "browserify": "^3.31.2",
@@ -23,7 +23,6 @@
   "devDependencies": {
     "expect.js": "~0.3.1",
     "jshint": "~2.4.4",
-    "mocha": "~1.17.1",
-    "racer": "~0.5.14"
+    "mocha": "~1.17.1"
   }
 }
