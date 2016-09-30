@@ -1,6 +1,6 @@
 {
   "name": "k-bundle",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "description": "Create Browserify package for a Racer or Derby app",
   "main": "index.js",
   "scripts": {
@@ -15,22 +15,23 @@
   "bugs": {
     "url": "https://github.com/kantele/k-bundle/issues"
   },
+  "bugs": {
+    "url": "https://github.com/derbyjs/racer-bundle/issues"
+  },
   "dependencies": {
-    "browserify": "^12.0.1",
+    "anymatch": "^1.3.0",
+    "browserify": "^13.0.1",
     "convert-source-map": "^1.1.1",
     "uglify-js": "^2.4.24",
     "watchify": "^3.4.0"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "expect.js": "~0.3.1",
-    "jshint": "~2.4.4",
-    "mocha": "~1.17.1"
-=======
-    "expect.js": "^0.3.1",
     "jshint": "^2.8.0",
-    "mocha": "^2.3.3",
-    "racer": "0.6.0-alpha45"
->>>>>>> upstream/master
+    "mocha": "^2.3.3"
+  },
+  "homepage": "https://github.com/derbyjs/racer-bundle#readme",
+  "directories": {
+    "test": "test"
   }
 }
