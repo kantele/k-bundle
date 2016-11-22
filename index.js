@@ -18,7 +18,9 @@ function bundle(file, options, cb) {
     options = null;
   }
   options || (options = {});
-  options.debug = true;
+  options.debug = options.sourcemaps;
+  // enable fullPaths to use https://github.com/hughsk/disc
+  // options.fullPaths = true;
   var minify = (options.minify == null) ? util.isProduction : options.minify;
   // These objects need to be defined otherwise watchify disables its cache
   options.cache = {};
@@ -53,44 +55,57 @@ function bundle(file, options, cb) {
       if (ids.every(matchIgnorePaths)) {
         return console.log('Ignoring update')
       }
-      callBundle(this, minify, options.onRebundle);
+      callBundle(this, options, options.onRebundle);
     });
 
-    callBundle(w, minify, cb);
+    callBundle(w, options, cb);
   } else {
-    callBundle(b, minify, cb);
+    callBundle(b, options, cb);
   }
 }
 
-function callBundle(b, minify, cb) {
+function callBundle(b, options, cb) {
   b.bundle(function(err, buffer) {
     if (err) return cb(err);
     // Extract the source map, which Browserify includes as a comment
     var source = buffer.toString('utf8');
-    var map = convertSourceMap.fromSource(source).toJSON();
-    source = convertSourceMap.removeComments(source);
-    if (!minify) return cb(null, source, map);
+
+    if (options.sourcemaps) {
+      var map = convertSourceMap.fromSource(source).toJSON();
+      source = convertSourceMap.removeComments(source);
+    }
+
+    if (!options.minify) return cb(null, source, map);
+
+    var uglifyOptions = {
+      fromString: true,
+      compress: true,
+      mangle: true
+    }
+
+    if (options.sourcemaps) {
+      var inSourceMap = JSON.parse(map);
+      uglifyOptions.inSourceMap = inSourceMap;
+      uglifyOptions.outSourceMap = outSourceMap;
+    }
+
+    var result = uglify.minify(source, uglifyOptions);
 
     // If inSourceMap is a string it is assumed to be a filename, but passing in
     // as an object avoids the need to make a file
-    var inSourceMap = JSON.parse(map);
-    var result = uglify.minify(source, {
-      fromString: true,
-      outSourceMap: 'map',
-      inSourceMap: inSourceMap,
-      compress: false
-    });
-
-    var mapObject = JSON.parse(result.map);
-    // Uglify doesn't include the source content in the map, so copy over from
-    // the map that browserify generates. However, before doing this, we must
-    // first remove any empty sourceContent items since UglifyJS ignores those
-    // files when populating the outSourceMap.sources array.
-    mapObject.sourcesContent = inSourceMap.sourcesContent.filter(isNotEmptyString)
-    if (mapObject.sources.length != mapObject.sourcesContent.length) {
-      console.error('Invalid sourcemap detected. sources.length does not match sourcesContent.length')
+    if (options.sourcemaps) {
+      var mapObject = JSON.parse(result.map);
+      // Uglify doesn't include the source content in the map, so copy over from
+      // the map that browserify generates. However, before doing this, we must
+      // first remove any empty sourceContent items since UglifyJS ignores those
+      // files when populating the outSourceMap.sources array.
+      mapObject.sourcesContent = inSourceMap.sourcesContent.filter(isNotEmptyString)
+      if (mapObject.sources.length != mapObject.sourcesContent.length) {
+        console.error('Invalid sourcemap detected. sources.length does not match sourcesContent.length')
+      }
+      var map = JSON.stringify(mapObject);
     }
-    var map = JSON.stringify(mapObject);
+
     cb(null, result.code, map);
   });
 }
