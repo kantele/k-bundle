@@ -1,6 +1,6 @@
 {
   "name": "k-bundle",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Create Browserify package for a Racer or Derby app",
   "main": "index.js",
   "scripts": {

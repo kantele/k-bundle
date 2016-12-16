@@ -86,7 +86,7 @@ function callBundle(b, options, cb) {
     if (options.sourcemaps) {
       var inSourceMap = JSON.parse(map);
       uglifyOptions.inSourceMap = inSourceMap;
-      uglifyOptions.outSourceMap = outSourceMap;
+      uglifyOptions.outSourceMap = 'map';
     }
 
     var result = uglify.minify(source, uglifyOptions);
