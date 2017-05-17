@@ -1,6 +1,6 @@
 {
   "name": "k-bundle",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Create Browserify package for a Racer or Derby app",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "browserify": "*",
     "convert-source-map": "*",
     "uglify-js": "*",
-    "watchify": "*"
+    "watchify": "^2.8.26"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
