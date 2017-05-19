@@ -22,8 +22,8 @@
     "anymatch": "^1.3.0",
     "browserify": "*",
     "convert-source-map": "*",
-    "uglify-js": "*",
-    "watchify": "^2.8.26"
+    "uglify-js": "^2.8.26",
+    "watchify": "*"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
