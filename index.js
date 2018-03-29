@@ -1,7 +1,7 @@
 var fs = require('fs');
 var browserify = require('browserify');
 var watchify = require('watchify');
-var uglify = require('uglify-js');
+var uglify = require('uglify-es');
 var convertSourceMap = require('convert-source-map');
 var anymatch = require('anymatch');
 
@@ -78,7 +78,6 @@ function callBundle(b, options, cb) {
     if (!options.minify) return cb(null, source, map);
 
     var uglifyOptions = {
-      fromString: true,
       compress: true,
       mangle: true
     }
